@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "8d85c321-172e-485b-9d54-923b79c31050",
+		"name": "Stitch-GraphQL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API Key Create",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"XnI1r1VsTUsCFgE4cEn7pScmUxL6q73BUsxL8nBPFai3QFFQYQHHzwRqnRfVS4kR\"\n}"
+				},
+				"url": {
+					"raw": "https://stitch.mongodb.com/api/client/v2.0/app/jsla-jfacv/auth/providers/api-key/login",
+					"protocol": "https",
+					"host": [
+						"stitch",
+						"mongodb",
+						"com"
+					],
+					"path": [
+						"api",
+						"client",
+						"v2.0",
+						"app",
+						"jsla-jfacv",
+						"auth",
+						"providers",
+						"api-key",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Movie GraphQL Query",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODk3MDMwMjYsImlhdCI6MTU4OTcwMTIyNiwiaXNzIjoiNWVjMGVhNmFkNTI2Y2NlYTYzNGQ5NjhjIiwic3RpdGNoX2RldklkIjoiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIiwic3RpdGNoX2RvbWFpbklkIjoiNWVjMGQ3OWE1ODkwNTVlZGE3N2ZhMTRjIiwic3ViIjoiNWVjMGUwNWFhMmVlOWExZmE3ZjQ4OThlIiwidHlwIjoiYWNjZXNzIn0.OSd0IW_ETiCQPT-wHqljKtXveXFh0TPfLbqOReay5s0",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\" : \"{ movies (query: { year: 2010, countries: [ \\\"Ireland\\\"] }) { title year runtime countries genres} }\"\n}"
+				},
+				"url": {
+					"raw": "https://us-west-2.aws.stitch.mongodb.com/api/client/v2.0/app/jsla-jfacv/graphql",
+					"protocol": "https",
+					"host": [
+						"us-west-2",
+						"aws",
+						"stitch",
+						"mongodb",
+						"com"
+					],
+					"path": [
+						"api",
+						"client",
+						"v2.0",
+						"app",
+						"jsla-jfacv",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

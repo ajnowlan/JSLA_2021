@@ -1,0 +1,71 @@
+
+mgeneratejs CustomerSingleView.json -n 5000000 
+
+mongoimport --host Demo-Store-shard-0/demo-store-shard-00-00-hbwxn.mongodb.net:27017,demo-store-shard-00-01-hbwxn.mongodb.net:27017,demo-store-shard-00-02-hbwxn.mongodb.net:27017 \
+ --ssl --username wwwwwwwww  --password xxxxxx  --authenticationDatabase admin \
+ --db clients --collection customers --type json --file jsla.json
+
+1. Run The Test Query As-Is__
+
+{ 'gender': 'Female', 'dob': { '$gte': ISODate('1990-01-01'), '$lte' : ISODate('1990-12-12')}, 'address.state': 'UT', 'policies': { $elemMatch: {'policyType': 'life', 'insured_person.smoking': true }}}
+
+
+2. Run The Test Query Again Returning Just The Data We Need__
+* Back on the __Documents__ tab click the __OPTIONS__ button and update the projection field as follows:
+
+  PROJECT: { '_id': 0, 'firstname': 1, 'lastname': 1, 'dob': 1 }
+
+Create An Appropriate Index__
+
+
+  FIELD: address.state, TYPE: 1 (asc)
+##  FIELD: policies.policyType, TYPE: 1 (asc)
+  FIELD: policies.insured_person.smoking, TYPE: 1 (asc)
+  FIELD: gender, TYPE: 1 (asc)
+  FIELD: dob, TYPE: 1 (asc)
+
+  Check Status of Index Build
+
+  db.adminCommand(
+    {
+      currentOp: true,
+      $or: [
+        { op: "command", "command.createIndexes": { $exists: true }  },
+        { op: "none", "msg" : /^Index Build/ }
+      ]
+    }
+)
+
+
+
+4. Run The Test Query Leveraging The New Index__
+
+5.Validation
+
+{
+  
+  gender : {
+    $in: [ "male", "Female" ] 
+  }
+}
+
+
+Covid Data - Global and US Database
+
+Aggregation
+
+
+[{$group: {
+  _id: "$country",
+  ConfirmedCases: {
+    $sum: "$confirmed"
+  },
+    PeopleDied: {
+    $sum: "$deaths"
+  },
+    PeopleRecovered: {
+    $sum: "$recovered"
+  },
+}}, {$sort: {
+  PeopleDied: -1
+}}, {$limit: 10}]
